@@ -1,2 +1,4 @@
 
 config.json
+rcon-cli
+rcon-cli.*
