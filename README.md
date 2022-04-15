@@ -11,9 +11,10 @@ chmod +x conn.sh
 
 place **outside** of your server pf2beta directory
 
-*This program uses [`rcon-cli`](https://github.com/itzg/rcon-cli/releases/tag/1.5.1)*
+*This program uses [`rcon-cli`](https://github.com/itzg/rcon-cli/releases/tag/1.6.0)*
 ```
-wget https://github.com/itzg/rcon-cli/releases/tag/1.5.1/rcon-cli_1.5.1_linux_amd64.tar.gz
+curl -L https://github.com/itzg/rcon-cli/releases/download/1.6.0/rcon-cli_1.6.0_linux_amd64.tar.gz > rcon-cli_1.6.0_linux_amd64.tar.gz 
+tar -xvzf rcon-cli_1.6.0_linux_amd64.tar.gz
 ```
 - YOU MUST INSTALL THIS IN THE SAME DIRECTORY OF `pf2beta-autoupdater` I WILL NOT INCLUDE IT
     - There is a version for several different flavors of Linux and Windows
