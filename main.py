@@ -46,7 +46,7 @@ def parseCommit(config):
     repoURL = f"https://{user}:{token}@{url}"
     print("Checking out " + repoURL)
     
-    remoteRepo = git.Repo(repoURL)
+    remoteRepo =git.Repo('../pf2beta').remotes[repoURL]
     main = remoteRepo.head.reference
     gitmsg = main.commit.message
     
