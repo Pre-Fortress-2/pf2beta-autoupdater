@@ -2,6 +2,7 @@ import git
 import json
 import sys
 import subprocess
+import time
 def main():
     try:
         with open('config.json') as json_file:
@@ -12,7 +13,9 @@ def main():
         print(e)
         sys.exit(1)
         
-    parseCommit(config)
+    while True:
+        parseCommit(config)
+        time.sleep(int(config["TIMEINMINUTES"])*60)
     
 def pullRepo(remoteRepo):
     localRepo = git.Repo("../pf2beta")
@@ -44,15 +47,16 @@ def parseCommit(config):
     key = config["KEYWORD"]
     
     repoURL = f"https://{user}:{token}@{url}"
-    print("Checking out " + repoURL)
+    print("Checking out " + url)
     
-    remoteRepo =git.Repo('../pf2beta').remotes[repoURL]
+    remoteRepo = git.Repo("../pf2beta")
     main = remoteRepo.head.reference
     gitmsg = main.commit.message
     
     print(str(gitmsg))
     pullRepo(remoteRepo)
     if gitmsg.lower() == key.lower():
+        print("Critical server update detected")
         restartServer()
         
 main()
