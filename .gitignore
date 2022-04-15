@@ -2,3 +2,6 @@
 config.json
 rcon-cli
 rcon-cli.*
+*.zip
+*.tar
+*.tar.gz
