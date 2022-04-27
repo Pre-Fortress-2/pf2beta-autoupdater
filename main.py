@@ -1,62 +1,82 @@
 import git
+import valve.rcon
 import json
 import sys
 import subprocess
 import time
+import platform
+
+def pullRepo(localRepo):
+    o = localRepo.remotes.origin
+    try:
+        o.pull()
+        print("Success")
+    except Exception as e:
+        print("Unable to pull repo, please make this user has the proper credentials.")
+        print(e)
+    
+def restartServer(server, port, password, screen, localRepo):
+    
+    server_address = (server, int(port))
+
+    with valve.rcon.RCON(server_address, password) as rcon:
+        print(rcon('say (ATTENTION)'))
+        time.sleep(2)
+        print(rcon('say "Critical Server Update."'))
+        time.sleep(1)
+        print(rcon('say "Server will restart in 10 seconds."'))
+        time.sleep(7)
+        print(rcon('say "3..."'))
+        time.sleep(1)
+        print(rcon('say "2..."'))
+        time.sleep(1)
+        print(rcon('say "1..."'))
+        time.sleep(2)
+        print(rcon('kickall "Server is updating"'))
+        
+    if platform.system().lower() == "linux":
+        subprocess.call(f"screen -X -S {screen} quit")
+        pullRepo(localRepo)
+        subprocess.call(f"screen -dmS {screen} ./run.sh")
+    if platform.system().lower() == "windows":
+        print("Please relaunch your server.")
+        
+def parseCommit(config):
+
+    server = config["SERVER_IP"]
+    port = config["PORT"]
+    password = config["SERVER_PW"]
+    key = config["KEYWORD"]
+    screen = config["SCREEN_NAME"]
+    
+    localRepo = git.Repo("../pf2beta")
+    main = localRepo.head.reference
+    gitmsg = main.commit.message
+    
+    print("Checking out " + str(main))
+    
+    print(str(gitmsg))    
+     
+    if key.lower() in gitmsg.lower():
+        print("Critical server update detected")
+        restartServer(server, port, password, screen, localRepo)
+        
+    else:
+        print(f"Keyword \'{key}\' not found\n")
+        
+
 def main():
     try:
         with open('config.json') as json_file:
             config = json.load(json_file)
 
     except Exception as e:
-        print("unable to open config.json - please check it is in the root directory")
+        print("Unable to open config.json - Please check it is in the root directory")
         print(e)
         sys.exit(1)
         
     while True:
         parseCommit(config)
-        time.sleep(int(config["TIMEINMINUTES"])*60)
-    
-def pullRepo(remoteRepo):
-    localRepo = git.Repo("../pf2beta")
-    o = localRepo.remotes.origin
-    
-    r = remoteRepo.remotes.origin
-    try:
-        o.pull()
-    except Exception as e:
-        print("unable to pull from local repo, using remote credentials instead")
-        print(e)
-        try: 
-            r.pull()
-        except Exception as re:
-            print("unable to pull from remote repo, maybe you forgot to enter the write styling for the repo?")
-            print(re)
-            sys.exit(1)
-    
-def restartServer():
-    subprocess.call(['sh', './conn.sh'])
-    
-        
-        
-def parseCommit(config):
-    
-    user = config["USER"]
-    token = config["TOKEN"]
-    url = config["REPO"]
-    key = config["KEYWORD"]
-    
-    repoURL = f"https://{user}:{token}@{url}"
-    print("Checking out " + url)
-    
-    remoteRepo = git.Repo("../pf2beta")
-    main = remoteRepo.head.reference
-    gitmsg = main.commit.message
-    
-    print(str(gitmsg))
-    pullRepo(remoteRepo)
-    if gitmsg.lower() == key.lower():
-        print("Critical server update detected")
-        restartServer()
-        
+        time.sleep(float(config["TIME"])*60)
+               
 main()

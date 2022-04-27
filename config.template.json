@@ -1,10 +1,9 @@
 {
-    "REPO":"",
-    "USER":"",
-    "TOKEN": "",
-    "TIMEINMINUTES": "",
-    "KEYWORD":"",
+    "TIME": 0,
+    "KEYWORD": "",
+    "SCREEN_NAME": "",
+
     "SERVER_IP":"",
-    "PORT":"",
+    "PORT": 0,
     "SERVER_PW":""
 }
