@@ -26,7 +26,9 @@ Enter in the pf2beta server IP, Port, and RCON password
 ## Running the software.
 
 Run this command.
+
 ``pip install -r requirements.txt``
 
 Then this command.
+
 ``screen -dmS updater python3 main.py``
