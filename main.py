@@ -36,9 +36,13 @@ def restartServer(server, port, password, screen, localRepo):
         print(rcon('kickall "Server is updating"'))
         
     if platform.system().lower() == "linux":
-        subprocess.call(f"screen -X -S {screen} quit")
-        pullRepo(localRepo)
-        subprocess.call(f"screen -dmS {screen} ./run.sh")
+        try:
+            print(subprocess.call(f"screen -X -S {screen} quit"))
+            pullRepo(localRepo)
+            print(subprocess.call(f"screen -dmS {screen} ./run.sh"))
+        except Exception as e:
+            print("Unable restart server, check users perms")
+            print(e)
     if platform.system().lower() == "windows":
         print("Please relaunch your server.")
         
