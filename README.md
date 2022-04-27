@@ -22,3 +22,11 @@ Enter the screen worker name you have your server set to in `SCREEN_NAME`
 Enter in the pf2beta server IP, Port, and RCON password
 - `SERVER_IP` `PORT` `SERVER_PW`
 - If no RCON password is set this will just not work
+
+## Running the software.
+
+Run this command.
+``pip install -r requirements.txt``
+
+Then this command.
+``screen -dmS updater python3 main.py``
