@@ -9,6 +9,7 @@ import platform
 def pullRepo(localRepo):
     o = localRepo.remotes.origin
     try:
+        print("Attempting to pull")
         o.pull()
         print("Success")
     except Exception as e:
@@ -60,10 +61,9 @@ def parseCommit(config):
     if key.lower() in gitmsg.lower():
         print("Critical server update detected")
         restartServer(server, port, password, screen, localRepo)
-        
     else:
         print(f"Keyword \'{key}\' not found\n")
-        
+        pullRepo(localRepo)
 
 def main():
     try:
