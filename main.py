@@ -42,7 +42,7 @@ def restartServer(server, port, password, screen, localRepo):
         try:
             os.system(f"screen -X -S {screen} quit")
             pullRepo(localRepo)
-            os.system(f"screen -dmS {screen} pf2beta ./run.sh")
+            os.system(f"screen -dmS {screen} ./run.sh")
         except Exception as e:
             print("Unable restart server, check users perms")
             print(e)
