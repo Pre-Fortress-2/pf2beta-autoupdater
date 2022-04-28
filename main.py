@@ -19,23 +19,25 @@ def pullRepo(localRepo):
 def restartServer(server, port, password, screen, localRepo):
     
     server_address = (server, int(port))
-
-    with valve.rcon.RCON(server_address, password) as rcon:
-        print(rcon('say (ATTENTION)'))
-        time.sleep(2)
-        print(rcon('say "Critical Server Update."'))
-        time.sleep(1)
-        print(rcon('say "Server will restart in 10 seconds."'))
-        time.sleep(7)
-        print(rcon('say "3..."'))
-        time.sleep(1)
-        print(rcon('say "2..."'))
-        time.sleep(1)
-        print(rcon('say "1..."'))
-        time.sleep(2)
-        print(rcon('kickall "Server is updating"'))
+    # try:
+    #     with valve.rcon.RCON(server_address, password) as rcon:
+    #         print(rcon('say (ATTENTION)'))
+    #         time.sleep(2)
+    #         print(rcon('say "Critical Server Update."'))
+    #         time.sleep(1)
+    #         print(rcon('say "Server will restart in 10 seconds."'))
+    #         time.sleep(7)
+    #         print(rcon('say "3..."'))
+    #         time.sleep(1)
+    #         print(rcon('say "2..."'))
+    #         time.sleep(1)
+    #         print(rcon('say "1..."'))
+    #         time.sleep(2)
+    #         print(rcon('kickall "Server is updating"'))
+    # except Exception as e:
+    #     print(e)
         
-    if platform.system().lower() == "linux":
+    if platform.system().lower() == "windows":
         try:
             print(subprocess.call(f"screen -X -S {screen} quit"))
             pullRepo(localRepo)
