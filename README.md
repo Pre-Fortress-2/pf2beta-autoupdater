@@ -12,7 +12,7 @@ Clone **outside** of your server ``pf2beta`` directory.
 Set the time in minutes you want the repo to check for changes in `TIME`
 
 ### Step 2
-Set the keyword you want to automatically update the server in `KEYWORD`
+Set the file name you want to automatically update the server in `KEYWORD`
 - If no keyword automatic restart functionality will not occur
 
 ### Step 3
