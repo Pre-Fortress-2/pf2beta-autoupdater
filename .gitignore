@@ -10,3 +10,4 @@ rcon-cli.*
 
 # This is the license from RCON-CLI
 LICENSE
+*.log
