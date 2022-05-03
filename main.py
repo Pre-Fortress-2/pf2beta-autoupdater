@@ -81,7 +81,7 @@ def parseCommit(config):
             changes = list(diff.iter_change_type(cht))
             if len(changes) == 0:
                 continue
-            logging.warning("Changes type:", cht)
+            logging.warning(f"Changes type: {cht}")
             for d in changes:
                 print(d.b_path)
                 if key in d.b_path:
