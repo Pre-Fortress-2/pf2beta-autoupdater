@@ -18,12 +18,16 @@ Set the keyword you want to automatically update the server in `KEYWORD`
 ### Step 3
 Enter the screen worker name you have your server set to in `SCREEN_NAME`
 
-### Step 5
+### Step 4
 Enter in the pf2beta server IP, Port, and RCON password
 - `SERVER_IP` `PORT` `SERVER_PW`
-- If no RCON password is set this will just not work
+- If no RCON password is set then the program will not make an attempt to to connect to the server.
 
 ## Running the software.
+
+Install screen
+
+``sudo apt install screen``
 
 Run this command.
 
