@@ -2,6 +2,7 @@
     "TIME": 0,
     "KEYWORD": "",
     "SCREEN_NAME": "",
+    "BOOT_SCRIPT": "",
 
     "SERVER_IP":"",
     "PORT": 0,

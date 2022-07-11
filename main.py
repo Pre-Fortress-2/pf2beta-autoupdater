@@ -7,7 +7,7 @@ import time
 import platform
 import logging
 
-REM_BRANCH = 'master'
+REM_BRANCH = 'main'
 logging.basicConfig(handlers=[logging.FileHandler(filename="updater.log", 
                                                   encoding='utf-8', mode='a+')],
                     format="[ %(asctime)s ] %(message)s",
@@ -28,7 +28,7 @@ def pullRepo(localRepo):
         logging.warning("Unable to pull repo, please make this user has the proper credentials.")
         print(e)
     
-def restartServer(server, port, password, screen, localRepo):
+def restartServer(server, port, password, screen, localRepo, script):
     
     server_address = (server, int(port))
     if password != "":
@@ -54,12 +54,12 @@ def restartServer(server, port, password, screen, localRepo):
         try:
             os.system(f"screen -X -S {screen} quit")
             pullRepo(localRepo)
-            os.system(f"screen -dmS {screen} ./run.sh")
+            os.system(f"screen -dmS {screen} ./{script}")
         except Exception as e:
             logging.warning("Unable restart server, check users perms")
             print(e)
     if platform.system().lower() == "windows":
-        logging.warning("Please relaunch your server.")
+        logging.warning("This software is not designed for Windows, please relaunch your server.")
         
 def parseCommit(config):
 
@@ -68,6 +68,7 @@ def parseCommit(config):
     password = config["SERVER_PW"]
     key = config["KEYWORD"]
     screen = config["SCREEN_NAME"]
+    script = config["BOOT_SCRIPT"]
     
     localRepo = git.Repo("../pf2beta")
     main = localRepo.head.reference
@@ -97,7 +98,7 @@ def parseCommit(config):
             restart = pretty_diff(diff)
             if restart:
                 logging.warning("Critical server update detected")
-                restartServer(server, port, password, screen, localRepo)
+                restartServer(server, port, password, screen, localRepo, script)
                 break
             else:
                 logging.warning(f"Keyword \'{key}\' not found\n")
